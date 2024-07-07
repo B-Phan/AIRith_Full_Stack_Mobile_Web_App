@@ -1,7 +1,8 @@
 {
   "expo": {
-    "name": "my_app",
-    "slug": "my_app",
+    "name": "AIrith",
+    "slug": "airith",
+    "scheme": "airith",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -22,6 +23,9 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "expo-router"
+    ]
   }
 }
