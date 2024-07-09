@@ -4,6 +4,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { images } from '../../constants';
 import FormField from '../../components/FormField';
 import CustomButton from '../../components/CustomButton';
+import { Link, router } from 'expo-router'
+import { signIn } from '../../lib/appwrite';
 
 const SignIn = () => {
   const [form, setForm] = useState({
@@ -14,15 +16,29 @@ const SignIn = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const submit = async () => {
-    if (form.email === "" || form.password === "") {
-      Alert.alert("Error", "Please fill in all fields");
-    } 
-  };
+    if (!form.email || !form.password) {
+      Alert.alert('Error', 'Please fill in all the fields');
+      return;
+    }
 
+    setIsSubmitting(true);
+
+    try {
+      await signIn(form.email, form.password);
+
+      // set it to global state...
+      
+      router.replace('/home');
+    } catch (error) {
+      Alert.alert('Error', error.message);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
   return (
     <SafeAreaView className="bg-primary h-full">
       <ScrollView>
-        <View className="w-full justify-center h-full px-1 my-1">
+        <View className="w-full justify-center min-h-[83vh] px-1 my-1">
           <Image 
             source={images.logo}
             resizeMode='contain' 
@@ -50,6 +66,14 @@ const SignIn = () => {
             containerStyles="mt-7"
             isLoading={isSubmitting}
           />
+          <View className="flex justify-center pt-5 flex-row gap-2">
+            <Link
+              href="/sign-up"
+              className="text-lg font-psemibold text-secondary"
+            >
+              Sign up
+            </Link>
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
