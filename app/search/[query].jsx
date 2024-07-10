@@ -40,7 +40,8 @@ const Search = () => {
               </Text>
 
               <View className="mt-6 mb-8">
-                <SearchInput initialQuery={query} refetch={refetch} />
+                {/* <SearchInput initialQuery={query} refetch={refetch} /> */}
+                <SearchInput initialQuery={query} />
               </View>
             </View>
           </>

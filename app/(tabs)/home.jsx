@@ -8,8 +8,10 @@ import EmptyState from '../../components/EmptyState';
 import VideoCard from '../../components/VideoCard';
 import { getAllPosts, getLatestPosts } from '../../lib/appwrite';
 import useAppwrite from '../../lib/useAppwrite';
+import { useGlobalContext } from '../../context/GlobalProvider';
 
 const Home = () => {
+  const { user, setUser, setIsLoggedIn } = useGlobalContext();
   const { data: posts, refetch } = useAppwrite(getAllPosts);
   const { data: latestPosts } = useAppwrite(getLatestPosts);
 
@@ -33,8 +35,8 @@ const Home = () => {
           <View style={{ marginVertical: 12, paddingHorizontal: 16 }}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 12 }}>
               <Text style={{ fontSize: 14, color: 'gray' }}>
-                Welcome Back{' '}
-                <Text style={{ fontSize: 18, fontWeight: '600', color: 'white' }}>AIRithmaster</Text> {/* Adjusted fontSize to 18 */}
+                Welcome Back,{' '}
+                <Text style={{ fontSize: 18, fontWeight: '600', color: 'white' }}>{user?.username}</Text>
               </Text>
               <Image
                 source={images.logo}
